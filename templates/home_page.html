@@ -9,9 +9,19 @@
 
 {% block content %}
 
-    <img src="{% static 'image/20190607_102925.jpg' %}" style="height: 100px; width:100px">
+    <div class="row">
+        <div class="col-3">
 
-    <h1>{{title}}</h1>
-    <p>{{content}}</p>
+        </div>
+        <div class="col-6">
+            <img src="{% static 'image/island.jpg' %}" style="height: 300px; width:400px">
+
+            <h1>{{title}}</h1>
+            <p>{{content}}</p>
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
 
 {% endblock content %}
