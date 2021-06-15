@@ -2,26 +2,26 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-12 col-md-4 mx-auto mb-3">
+        <div class="col-12-sm col-md-4 mx-auto mb-3">
             {% include 'search/snippets/search-form.html' %}
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-8 mx-auto">
+        <div class="col-12-sm col-md-8 mx-auto">
              <p>Search results</p>
         </div>
     </div>
-    <div class="row">
+{#    <div class="row">#}
+        <div class="col-12-sm col-md-1 mx-auto py-5 mb-3">
         {% if object_list.exists %}
             {% for obj in object_list %}
                 {% if not obj.featured %}
-                    <div class="col-12 col-md-1 mx-auto">
-                        {% include 'products/snippets/card.html' with instance=obj %}
-                    </div>
+                    {% include 'products/snippets/card.html' with instance=obj %}
                 {% endif %}
             {% endfor %}
         {% endif %}
-    </div>
+        </div>
+{#    </div>#}
     <hr>
 
     <div class="row">
