@@ -1,46 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-4 mx-auto mb-3">
-                {% include 'search/snippets/search-form.html' %}
-            </div>
+    <div class="row">
+        <div class="col-12 col-md-4 mx-auto mb-3">
+            {% include 'search/snippets/search-form.html' %}
         </div>
-        <div class="row">
-            <div class="col-12 col-md-8 mx-auto">
-                 <p>Search results</p>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+             <p>Search results</p>
         </div>
-        <div class="row">
-            {% if object_list.exists %}
-                {% for obj in object_list %}
-                    {% if not obj.featured %}
-                        <div class="col-12 col-md-2 mx-auto">
-                            {% include 'products/snippets/card.html' with instance=obj %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
-        </div>
-        <hr>
-
-        <div class="row">
-            <div class="col-12 col-md-8 mx-auto">
-                <p>Featured products</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-8 mx-auto">
-                {% for obj in object_list %}
-                    {% if obj.featured %}
+    </div>
+    <div class="row">
+        {% if object_list.exists %}
+            {% for obj in object_list %}
+                {% if not obj.featured %}
+                    <div class="col-12 col-md-1 mx-auto">
                         {% include 'products/snippets/card.html' with instance=obj %}
-{#                        <a href="{{ obj.get_absolute_url }}">{{ obj }}</a> <br>#}
-                    {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    <hr>
 
-                {% endfor %}
-            </div>
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+            <p>Featured products</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+            {% for obj in object_list %}
+                {% if obj.featured %}
+                    {% include 'products/snippets/card.html' with instance=obj %}
+{#                        <a href="{{ obj.get_absolute_url }}">{{ obj }}</a> <br>#}
+                {% endif %}
+
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}
