@@ -9,7 +9,7 @@
                 <p>results for <b>{{ request.GET.q}}</b></p>
             {% else %}
                 <div class="col-6 col-md-4 col-lg-6 mx-auto py-3">
-                    <input type="text" class="form-control", placeholder="search">
+                    {% include 'search/snippets/search-form.html' %}
                 </div>
             {% endif %}
         </div>
