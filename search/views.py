@@ -9,7 +9,7 @@ from products.models import Product
 class ProductSearchView(ListView):
     queryset = Product.objects.all()
     # model = Product
-    template_name = 'products/list.html'
+    template_name = 'search/view.html'
 
     def get_queryset(self, *args, **kwargs):
         print(self.request.GET)

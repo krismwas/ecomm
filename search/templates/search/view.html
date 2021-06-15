@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row mb-3">
+{#            {{ request }}#}
+            {% if request.GET.q %}
+                <p>results for <b>{{ request.GET.q}}</b></p>
+            {% else %}
+                <div class="col-6 col-md-4 col-lg-6 mx-auto py-3">
+                    <input type="text" class="form-control", placeholder="search">
+                </div>
+            {% endif %}
+        </div>
+        <p>Featured products</p>
+        <div class="row">
+            {% for obj in object_list %}
+                {% if forloop.counter|divisibleby:3 %}
+                    </div> <div class="row">
+                {% endif %}
+                {% include 'products/snippets/card.html' with instance=obj %}
+                <a href="{{ obj.get_absolute_url }}">{{ obj }}</a> <br>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
