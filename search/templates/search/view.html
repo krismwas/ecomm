@@ -11,18 +11,19 @@
              <p>Search results</p>
         </div>
     </div>
-{#    <div class="row">#}
-        <div class="col-12-sm col-md-1 mx-auto py-5 mb-3">
+    <div class="row">
+
         {% if object_list.exists %}
             {% for obj in object_list %}
                 {% if not obj.featured %}
-                    {% include 'products/snippets/card.html' with instance=obj %}
+                    <div class="col-12-sm col-md-1 mx-auto py-5 mb-3">
+                        {% include 'products/snippets/card.html' with instance=obj %}
+                    </div>
                 {% endif %}
             {% endfor %}
         {% endif %}
-        </div>
-{#    </div>#}
-    <hr>
+
+    </div>
 
     <div class="row">
         <div class="col-12 col-md-8 mx-auto">
@@ -30,14 +31,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-8 mx-auto">
+
             {% for obj in object_list %}
                 {% if obj.featured %}
-                    {% include 'products/snippets/card.html' with instance=obj %}
+                     <div class="col-12 col-md-8 mx-auto">
+                        {% include 'products/snippets/card.html' with instance=obj %}
 {#                        <a href="{{ obj.get_absolute_url }}">{{ obj }}</a> <br>#}
+                      </div>
                 {% endif %}
 
             {% endfor %}
-        </div>
+
     </div>
 {% endblock content %}
