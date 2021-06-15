@@ -3,26 +3,40 @@
 {% block content %}
 
     <div class="container">
-        <div class="row mb-3">
-{#            {{ request }}#}
-            {% if request.GET.q %}
-                <p>results for <b>{{ request.GET.q}}</b></p>
-            {% else %}
-                <div class="col-6 col-md-4 col-lg-6 mx-auto py-3">
-                    {% include 'search/snippets/search-form.html' %}
-                </div>
+        <div class="row">
+            <div class="col-12 col-md-4 mx-auto mb-3">
+                {% include 'search/snippets/search-form.html' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-8 mx-auto">
+                 <p>Search results</p>
+            </div>
+        </div>
+        <div class="row">
+            {% if object_list.exists %}
+                {% for obj in object_list %}
+                    {% if not obj.featured %}
+                        <div class="col-12 col-md-2 mx-auto">
+                            {% include 'products/snippets/card.html' with instance=obj %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
             {% endif %}
         </div>
+        <hr>
+
         <p>Featured products</p>
         <div class="row">
-            {% for obj in object_list %}
-                {% if forloop.counter|divisibleby:3 %}
-                    </div> <div class="row">
-                {% endif %}
-                {% include 'products/snippets/card.html' with instance=obj %}
-                <a href="{{ obj.get_absolute_url }}">{{ obj }}</a> <br>
+            <div class="col-12 col-md-8 mx-auto">
+                {% for obj in object_list %}
+                    {% if obj.featured %}
+                        {% include 'products/snippets/card.html' with instance=obj %}
+{#                        <a href="{{ obj.get_absolute_url }}">{{ obj }}</a> <br>#}
+                    {% endif %}
 
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock content %}
