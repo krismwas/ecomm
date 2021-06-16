@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.db.models.signals import m2m_changed, pre_save
 from products.models import Product
 
 
@@ -41,3 +41,15 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
+
+def m2m_changed_receiver_signal(sender, instance, action, **kwargs):
+    cart_products = instance.products.all()
+    total = 0
+    for product in cart_products:
+        total = + product.price
+
+    instance.total = total
+    instance.save()
+
+
+m2m_changed.connect(m2m_changed_receiver_signal, sender=Cart.products.through)
