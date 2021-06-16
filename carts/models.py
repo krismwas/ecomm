@@ -33,6 +33,7 @@ class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     products = models.ManyToManyField(Product, blank=True)
     total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
+    sub_total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -42,14 +43,21 @@ class Cart(models.Model):
         return str(self.id)
 
 
-def m2m_changed_receiver_signal(sender, instance, action, **kwargs):
+def pre_save_cart_receiver_signal(sender, instance, **kwargs):
+    instance.total = instance.sub_total + 10
+
+
+pre_save.connect(pre_save_cart_receiver_signal, sender=Cart)
+
+
+def m2m_changed_cart_receiver_signal(sender, instance, action, **kwargs):
     cart_products = instance.products.all()
-    total = 0
+    sub_total = 0
     for product in cart_products:
-        total = + product.price
+        sub_total = + product.price
+    if instance.sub_total == instance.total:
+        instance.sub_total = sub_total
+        instance.save()
 
-    instance.total = total
-    instance.save()
 
-
-m2m_changed.connect(m2m_changed_receiver_signal, sender=Cart.products.through)
+m2m_changed.connect(m2m_changed_cart_receiver_signal, sender=Cart.products.through)
