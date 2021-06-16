@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.http import Http404
 
 from .models import Product
+from carts.models import Cart
 
 
 class ProductFeatured(ListView):
@@ -40,6 +41,12 @@ class ProductSlugDetail(DetailView):
         if instance is None:
             raise Http404('product does not exist')
         return instance
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        context['cart'] = cart_obj
+        return context
 
 
 def product_detail_view(request, pk):
