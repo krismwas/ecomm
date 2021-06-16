@@ -5,8 +5,28 @@ from products.models import Product
 
 
 class CartModelManager(models.Manager):
-    def new(self, user):
-        return self.model.objects.create(user=user)
+    def new_or_get(self, request):
+        cart_id = request.session.get('cart_id', None)
+        qs = self.get_queryset().filter(id=cart_id)
+        if qs.count() == 1:
+            print('cart_id exists')
+            cart_obj = qs.first()
+            new_obj = False
+            if request.user.is_authenticated() and cart_obj.user is None:
+                cart_obj.user = request.user
+                cart_obj.save()
+        else:
+            cart_obj = Cart.objects.new(user=request.user)
+            new_obj = True
+            request.session['cart_id'] = cart_obj.id
+        return cart_obj, new_obj
+
+    def new(self, user=None):
+        user_obj = None
+        if user is not None:
+            if user.is_authenticated():
+                user_obj = user
+        return self.model.objects.create(user=user_obj)
 
 
 class Cart(models.Model):
