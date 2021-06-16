@@ -44,7 +44,9 @@ class Cart(models.Model):
 
 
 def pre_save_cart_receiver_signal(sender, instance, **kwargs):
-    instance.total = instance.sub_total + 10
+    if instance.total > 0:
+        instance.total = instance.sub_total + 10
+    instance.total = 0.00
 
 
 pre_save.connect(pre_save_cart_receiver_signal, sender=Cart)
