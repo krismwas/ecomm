@@ -25,7 +25,7 @@ class Order(models.Model):
 
 def pre_save_order_receiver(instance, **kwargs):
     if not instance.order_id:
-        unique_order_id_generator(instance)
+        instance.order_id = unique_order_id_generator(instance)
 
 
 pre_save.connect(pre_save_order_receiver, sender=Order)
