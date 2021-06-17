@@ -15,8 +15,11 @@
 
             {% for instance in cart.products.all %}
                 <tr>
-                  <th scope="row">1</th>
-                  <td>{{ instance.title }}</td>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>
+                      <a href="{{ instance.get_absolute_url }}">{{ instance.title }}</a>
+                      {% include 'products/snippets/update-cart.html' with product=instance cart=cart in_cart=True %}
+                  </td>
                   <td>{{ instance.price }}</td>
                 </tr>
             {% endfor %}
