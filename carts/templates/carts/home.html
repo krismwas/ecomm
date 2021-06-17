@@ -1,5 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Cart home</h1>
+    <h3>Cart</h3>
+    {% if cart.products.all.exists %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for instance in cart.products.all %}
+                <tr>
+                  <th scope="row">1</th>
+                  <td>{{ instance.title }}</td>
+                  <td>{{ instance.price }}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                  <td colspan="2"></td>
+                  <td><b>Subtotal</b> {{ cart.sub_total }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2"></td>
+                  <td><b>Total</b> {{ cart.total }}</td>
+                </tr>
+
+          </tbody>
+        </table>
+    {% else %}
+        <p class="lead">Cart is empty</p>
+    {% endif %}
 {% endblock content %}

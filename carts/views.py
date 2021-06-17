@@ -8,14 +8,14 @@ from .models import Cart
 
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
-    context = {}
+    context = {"cart": cart_obj}
     return render(request, 'carts/home.html', context)
 
 
 def cart_update(request):
     product_id = request.POST.get('product_id', None)
     if product_id is not None:
-        product_obj = Product.objects.get(id=1)
+        product_obj = Product.objects.get(id=product_id)
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
