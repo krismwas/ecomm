@@ -27,12 +27,12 @@ def cart_update(request):
     return redirect("cart:home")
 
 
-def checkout(request):
+def checkout_home(request):
     cart_obj, cart_obj_created = Cart.objects.new_or_get(request)
     order_obj = None
-    if cart_obj_created or cart_obj.products.count() == 1:
-        redirect('cart:home')
+    if cart_obj_created or cart_obj.products.count() == 0:
+        return redirect('cart:home')
     else:
         order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
-    context = {"object": order_obj}
-    return render(request, 'carts/checkout.html', context)
+
+    return render(request, 'carts/checkout.html', {"object": order_obj})

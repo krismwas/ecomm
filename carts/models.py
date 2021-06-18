@@ -34,8 +34,8 @@ class Cart(models.Model):
     products = models.ManyToManyField(Product, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    sub_total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
-    total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
+    sub_total = models.DecimalField(max_digits=50, decimal_places=2, default=0.00)
+    total = models.DecimalField(max_digits=50, decimal_places=2, default=0.00)
 
     objects = CartModelManager()
 
