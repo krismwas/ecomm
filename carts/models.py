@@ -32,10 +32,10 @@ class CartModelManager(models.Manager):
 class Cart(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
     products = models.ManyToManyField(Product, blank=True)
-    total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
-    sub_total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    sub_total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
+    total = models.DecimalField(max_digits=100, decimal_places=2, default=0.00)
 
     objects = CartModelManager()
 
@@ -43,25 +43,29 @@ class Cart(models.Model):
         return str(self.id)
 
 
-def pre_save_cart_receiver_signal(sender, instance, **kwargs):
-    if instance.total > 0:
-        instance.total = instance.sub_total + 10
-    else:
-        instance.total = 0.00
-
-
-pre_save.connect(pre_save_cart_receiver_signal, sender=Cart)
-
-
 def m2m_changed_cart_receiver_signal(sender, instance, action, **kwargs):
+    print("kl")
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
-        cart_products = instance.products.all()
+        print('ml')
+        products = instance.products.all()
         total = 0
-        for product in cart_products:
-            total += product.price
-        if instance.sub_total != instance.total:
+        for x in products:
+            total += x.price
+        if instance.sub_total != total:
             instance.sub_total = total
             instance.save()
 
 
 m2m_changed.connect(m2m_changed_cart_receiver_signal, sender=Cart.products.through)
+
+
+def pre_save_cart_receiver_signal(sender, instance, **kwargs):
+    # if instance.total > 0:
+    #     print('pasquina')
+    instance.total = instance.sub_total + 10
+    # else:
+    #     print('maouse')
+    #     instance.total = 0.00
+
+
+pre_save.connect(pre_save_cart_receiver_signal, sender=Cart)
