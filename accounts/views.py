@@ -45,8 +45,10 @@ def login_page(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            # print("mke nyumbani")
-            # print(is_safe_url(request_path, request.get_host()))
+            try:
+                del request.session['guest_email_id']
+            except:
+                pass
             if is_safe_url(request_path, request.get_host()):
                 return redirect(request_path)
             else:
