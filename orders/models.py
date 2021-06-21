@@ -57,6 +57,9 @@ post_save.connect(post_save_cart_total, sender=Cart)
 def pre_save_unique_order_id(instance, **kwargs):
     if not instance.order_id:
         instance.order_id = unique_order_id_generator(instance)
+    qs = Order.objects.filter(cart=instance.cart).exclude(billing_profile=instance.billing_profile)
+    if qs.exists():
+        qs.update(active=False)
 
 
 pre_save.connect(pre_save_unique_order_id, sender=Order)
