@@ -33,9 +33,15 @@
             {% url 'checkout_address_create' as checkout_address_create %}
                 {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create address_type='billing'%}
         {% else %}
+            <h1>Finalize checkout</h1>
+
             <p>Cart total: {{ object.cart.total }}</p>
             <p>Shipping total: {{ object.shipping_total}}</p>
             <p>Order total: {{ object.total }}</p>
+            <form class="form" method="post" action="">
+                {% csrf_token %}
+                <button type="submit">checkout</button>
+            </form>
             </div>
         </div>
         {% endif %}
