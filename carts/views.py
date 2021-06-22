@@ -69,7 +69,7 @@ def checkout_home(request):
             order_obj.mark_paid()
             request.session['cart_items'] = 0
             del request.session['cart_id']
-            return redirect("/cart/success")
+            return redirect("cart:success   ")
     context = {
         "object": order_obj,
         "billing_profile": billing_profile,
