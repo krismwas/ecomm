@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
 from addresses.forms import AddressForm
+from billing.models import BillingProfile
 
 
 def checkout_address_create_view(request):
@@ -13,9 +14,14 @@ def checkout_address_create_view(request):
     next_post = request.POST.get('next')
     request_path = next_ or next_post or None
     if form.is_valid():
-
-        if is_safe_url(request_path, request.get_host()):
-            return redirect(request_path)
-        else:
-            return redirect('cart:check_out')
+        instance = form.save(commit=False)
+        billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
+        if billing_profile is not None:
+            instance.billing_profile = billing_profile
+            instance.address_type = request.POST.get('address_type', 'shipping')
+            instance.save()
+            if is_safe_url(request_path, request.get_host()):
+                return redirect(request_path)
+            else:
+                return redirect('cart:check_out')
     return redirect('cart:check_out')
