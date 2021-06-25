@@ -3,7 +3,7 @@
 {% block content %}
     <h3>Cart</h3>
     {% if cart.products.all.exists %}
-        <table class="table">
+        <table class="table cart-table">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -11,7 +11,7 @@
               <th scope="col">Price</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="cart-body">
 
             {% for instance in cart.products.all %}
                 <tr>

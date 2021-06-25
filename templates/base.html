@@ -26,7 +26,8 @@
                 productForm.submit(function (event) {
                     event.preventDefault();
                     var thisForm = $(this);
-                    var actionEndpoint = thisForm.attr('action')
+                    {#var actionEndpoint = thisForm.attr('action')#}
+                    var actionEndpoint = thisForm.attr('data-endpoint')
                     var httpMethod = thisForm.attr('method')
                     var formData = thisForm.serialize();
 
@@ -43,6 +44,12 @@
                             }
                             var navbarCartCount = $(".navbar-cart-count")
                             navbarCartCount.text(data.cartCount)
+
+                            if(window.location.href.indexOf("home") == -1){
+                                console.log(window.location.href.indexOf("home"))
+                                console.log("nyama")
+                                refreshCart()
+                            }
                         },
                         error: function (errorData) {
                             console.log("error")
@@ -50,6 +57,29 @@
                         }
                     })
                 })
+
+                function refreshCart() {
+                    console.log("in current cart")
+                    var cartTable = $(".cart-table")
+                    var cartBody = cartTable.find(".cart-body")
+                    cartBody.html("<h1>Changed</h1>")
+
+                    var refreshCartUrl = '/api/cart/'
+                    var refreshCartMethod = 'GET'
+                    var data = {}
+                    $.ajax({
+                        url: refreshCartUrl,
+                        method: refreshCartMethod,
+                        data: data,
+                        success: function () {
+                            console.log("success")
+                        },
+                        error: function (errorData) {
+                            console.log("error")
+                            console.log(errorData)
+                        } 
+                    })
+                }
             })
         </script>
 
