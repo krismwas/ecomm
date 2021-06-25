@@ -10,6 +10,12 @@ from products.models import Product
 from .models import Cart
 
 
+def cart_detail_api_view(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    products = [{"name": x.name, "price": x.price} for x in cart_obj.products.all()]
+    return JsonResponse({"products": products, "subtotal": cart_obj.sub_total, "total": cart_obj.total})
+
+
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     return render(request, "carts/home.html", {"cart": cart_obj})
