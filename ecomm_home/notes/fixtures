@@ -1,0 +1,7 @@
+fixtures is a way to back up data for any app
+
+the code below creates dumps data from Product model into products.jon
+python manage.py dumpdata products.Product --format json --indent 4 > products/fixtures/products.json
+
+loading the data after dumping
+python manage.py loaddata products/fixtures/products.json
