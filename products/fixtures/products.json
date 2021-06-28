@@ -1,0 +1,41 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "t shirt",
+        "slug": "abc3",
+        "description": "this is a very awesome t shirt",
+        "price": "20.00",
+        "image": "products/136970.jpeg",
+        "featured": false,
+        "active": true
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "t-shirt 2",
+        "slug": "abc2",
+        "description": "yeah",
+        "price": "90.00",
+        "image": "products/879398.jpeg",
+        "featured": false,
+        "active": true
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "t-shirt 3",
+        "slug": "t-shirt-3",
+        "description": "this is a featured product",
+        "price": "345.00",
+        "image": "products/1213365.jpeg",
+        "featured": true,
+        "active": true
+    }
+}
+]
