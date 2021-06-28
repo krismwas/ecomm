@@ -29,7 +29,7 @@ def guest_register_view(request):
 
 
 def login_page(request):
-    form = LoginForm(request.POST)
+    form = LoginForm(request.POST or None)
 
     context = {
         'form': form
@@ -39,10 +39,10 @@ def login_page(request):
     request_path = next_ or next_post or None
 
     if form.is_valid():
-        username = form.cleaned_data.get('username')
+        email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
 
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=email, password=password)
         if user is not None:
             login(request, user)
             try:
@@ -64,12 +64,13 @@ def register_page(request):
         'form': form
     }
     if form.is_valid():
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        username = form.cleaned_data.get('username')
-
-        new_user = get_user_model().objects.create_user(
-            email, password, username
-        )
-        print(new_user)
+        form.save()
+        # email = form.cleaned_data.get('email')
+        # password = form.cleaned_data.get('password')
+        # username = form.cleaned_data.get('username')
+        #
+        # new_user = get_user_model().objects.create_user(
+        #     email, password, username
+        # )
+        # print(new_user)
     return render(request, 'accounts/register.html', context)
