@@ -29,7 +29,7 @@ class MyUserManager(BaseUserManager):
             email, password=password, is_staff=True, is_admin=True
         )
         return user_obj
-    
+
 
 class MyUser(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
