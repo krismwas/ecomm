@@ -1,8 +1,40 @@
 {% include 'base.html' %}
 
 {% block content %}
-
-    <h1>Home</h1>
-    {{ request.user }}
-
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-3 my-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Support</h5>
+                    -About, Contact
+                  </div>
+                </div>
+            </div>
+             <div class="col-12 col-md-3 my-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Billing</h5>
+                    -Address -Payment -Method -Order
+                  </div>
+                </div>
+            </div>
+             <div class="col-12 col-md-3 my-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Preferences</h5>
+                    -Name -Email -Password reset -Email Marketing preference
+                  </div>
+                </div>
+            </div>
+             <div class="col-12 col-md-3 my-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">History</h5>
+                    -Products Viewed
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
