@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, FormView, DetailView
 from django.utils.http import is_safe_url
+from django.contrib import messages
 
 from .forms import LoginForm, RegisterForm, GuestForm
 from .models import GuestEmail
@@ -52,6 +53,8 @@ class LoginView(FormView):
 
         user = authenticate(username=email, password=password)
         if user is not None:
+            if not user.is_active:
+                messages.error(request, "This user is not active")
             login(request, user)
             try:
                 del request.session['guest_email_id']
