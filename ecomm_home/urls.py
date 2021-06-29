@@ -40,8 +40,10 @@ urlpatterns = [
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include('products.urls', namespace='products')),
     url(r'^search/', include('search.urls', namespace='search')),
+    url(r'^accounts/', include('accounts.passwords.urls')),
     url(r'^accounts/', RedirectView.as_view(url='/account/')),
     url(r'^account/', include('accounts.urls', namespace='accounts')),
+
 
 
 
