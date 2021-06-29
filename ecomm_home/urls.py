@@ -24,6 +24,7 @@ from addresses.views import checkout_address_create_view, checkout_address_reuse
 from .views import home_page, contact_page
 from accounts.views import LoginView, RegisterView, guest_register_view
 from carts.views import cart_detail_api_view
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^$', home_page, name='home'),
@@ -39,7 +40,9 @@ urlpatterns = [
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include('products.urls', namespace='products')),
     url(r'^search/', include('search.urls', namespace='search')),
-    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
+    url(r'^accounts/', RedirectView.as_view(url='/account/')),
+    url(r'^account/', include('accounts.urls', namespace='accounts')),
+
 
 
     url(r'^admin/', admin.site.urls),
