@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^bootstrap/$', TemplateView.as_view(template_name='bootstrap/example.html')),
     url(r'^products/', include('products.urls', namespace='products')),
     url(r'^search/', include('search.urls', namespace='search')),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
 
 
     url(r'^admin/', admin.site.urls),
